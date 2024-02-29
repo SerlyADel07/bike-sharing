@@ -165,8 +165,6 @@ with col3:
     daily_rent_total = daily_rent_df['count'].sum()
     st.metric('Total User', value= daily_rent_total)
 
-')
-
 # Membuat jumlah penyewaan bulanan
 st.subheader('Monthly Rentals')
 fig, ax = plt.subplots(figsize=(24, 8))
