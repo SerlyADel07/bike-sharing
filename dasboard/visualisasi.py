@@ -117,10 +117,9 @@ def create_weather_rent_df(df):
 min_date = pd.to_datetime(day_df['dateday']).dt.date.min()
 max_date = pd.to_datetime(day_df['dateday']).dt.date.max()
 
-image_url = 'https://i.pinimg.com/474x/f4/0b/e9/f40be944d2e4061ce35b5c368f9ef87f.jpg'
-
+image_url = 'https://upload.wikimedia.org/wikipedia/commons/9/97/Sepeda_Onthel.jpg'
 with st.sidebar:
-    st.image(image_url, caption='utraman', use_column_width=True)
+    st.image(image_url, caption='bike', use_column_width=True)
     
     # Mengambil start_date & end_date dari date_input
     start_date, end_date = st.date_input(
