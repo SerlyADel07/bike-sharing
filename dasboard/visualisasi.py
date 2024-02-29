@@ -165,6 +165,8 @@ with col3:
     daily_rent_total = daily_rent_df['count'].sum()
     st.metric('Total User', value= daily_rent_total)
 
+')
+
 # Membuat jumlah penyewaan bulanan
 st.subheader('Monthly Rentals')
 fig, ax = plt.subplots(figsize=(24, 8))
@@ -182,6 +184,10 @@ for index, row in enumerate(monthly_rent_df['count']):
 ax.tick_params(axis='x', labelsize=25, rotation=45)
 ax.tick_params(axis='y', labelsize=20)
 st.pyplot(fig)
+
+st.markdown('''
+    :red[Streamlit] :orange[can] :green[write] :blue[text] :violet[in]
+    :gray[pretty] :rainbow[colors].''')
 
 # Membuat jumlah penyewaan berdasarkan season
 st.subheader('Seasonly Rentals')
@@ -217,6 +223,10 @@ ax.tick_params(axis='y', labelsize=15)
 ax.legend()
 st.pyplot(fig)
 
+st.markdown('''
+    :red[Streamlit] :orange[can] :green[write] :blue[text] :violet[in]
+    :gray[pretty] :rainbow[colors].''')
+
 # Membuah jumlah penyewaan berdasarkan kondisi cuaca
 st.subheader('Weatherly Rentals')
 
@@ -239,6 +249,12 @@ ax.set_ylabel(None)
 ax.tick_params(axis='x', labelsize=20)
 ax.tick_params(axis='y', labelsize=15)
 st.pyplot(fig)
+
+st.markdown('''
+    :red[Streamlit] :orange[can] :green[write] :blue[text] :violet[in]
+    :gray[pretty] :rainbow[colors].''')
+
+
 
 # Membuat jumlah penyewaan berdasarkan weekday, working dan holiday
 st.subheader('Weekday, Workingday, and Holiday Rentals')
@@ -314,5 +330,8 @@ axes[2].axis('off')
 
 plt.tight_layout()
 st.pyplot(fig)
+st.markdown('''
+    :red[Streamlit] :orange[can] :green[write] :blue[text] :violet[in]
+    :gray[pretty] :rainbow[colors].''')
 
-st.caption('Copyright (c) M haikal 2023')
+st.caption('Copyright (c) SerlyADel 2024')
