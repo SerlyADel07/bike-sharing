@@ -238,7 +238,7 @@ st.markdown('''
 
 ### Tren Musiman:
 
-Di Indonesia, terdapat tren musiman yang signifikan dalam penyewaan sepeda. Permintaan tertinggi terjadi saat musim kemarau (Mei-Oktober), sementara permintaan terendah terjadi pada musim hujan (November-April).
+Di America, terdapat tren musiman yang signifikan dalam penyewaan sepeda. Permintaan tertinggi terjadi saat musim kemarau (Mei-Oktober), sementara permintaan terendah terjadi pada musim hujan (November-April).
 
 ##3 Faktor Penentu:
 
@@ -379,7 +379,7 @@ st.markdown('''
 
 ### Tren Musiman:
 
-Dalam industri penyewaan sepeda di Indonesia, ada tren musiman yang jelas. Permintaan tertinggi terjadi selama musim kemarau (Mei-Oktober), sementara permintaan terendah terjadi selama musim hujan (November-April).
+Dalam industri penyewaan sepeda di America, ada tren musiman yang jelas. Permintaan tertinggi terjadi selama musim kemarau (Mei-Oktober), sementara permintaan terendah terjadi selama musim hujan (November-April).
 
 ### Faktor Penentu:
 
