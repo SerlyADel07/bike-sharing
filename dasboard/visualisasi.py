@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+from matplotlib.ticker import FuncFormatter
 import streamlit as st
 
 # Set style seaborn
@@ -257,7 +258,7 @@ Tren musiman dan hari-hari dengan permintaan tinggi menunjukkan bahwa ada peluan
 
 
 ## Membuah jumlah penyewaan berdasarkan kondisi cuaca
-from matplotlib.ticker import FuncFormatter
+
 
 st.subheader('Weatherly Rentals')
 
