@@ -149,22 +149,28 @@ weather_rent_df = create_weather_rent_df(main_df)
 # Membuat judul
 st.header('Bike Rental Dashboard 🚲')
 
+def custom_format(number):
+    parts = f"{number:,}".split(",")
+    if len(parts) > 1:
+        return f"{parts[0]}, {','.join(parts[1:])}"
+    return f"{number}"
+
 # Membuat jumlah penyewaan harian
 st.subheader('Daily Rentals')
 col1, col2, col3 = st.columns(3)
 
 with col1:
     daily_rent_casual = daily_casual_rent_df['casual'].sum()
-    st.metric('Casual User', value="{:,}".format(daily_rent_casual))
+    st.metric('Casual User', value=custom_format(daily_rent_casual))
     st.markdown("---")
 
 with col2:
     daily_rent_registered = daily_registered_rent_df['registered'].sum()
-    st.metric('Registered User', value= daily_rent_registered)
+    st.metric('Registered User', value=custom_format(daily_rent_registered))
  
 with col3:
     daily_rent_total = daily_rent_df['count'].sum()
-    st.metric('Total User', value= daily_rent_total)
+    st.metric('Total User', value=custom_format(daily_rent_total))
 
 # Membuat jumlah penyewaan bulanan
 st.subheader('Monthly Rentals')
