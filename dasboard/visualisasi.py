@@ -11,7 +11,6 @@ sns.set(style='dark')
 day_df = pd.read_csv(r"dasboard/mixel.csv")
 day_df.head()
 
-# Menghapus kolom yang tidak diperlukan
 drop_col = ['windspeed']
 
 for i in day_df.columns:
@@ -175,20 +174,51 @@ with col3:
 
 # Membuat jumlah penyewaan bulanan
 st.subheader('Monthly Rentals')
+def with_juta(x, pos):
+    # Assuming 'count' is in the thousands ('000). For actual values in 'jt', adjust accordingly.
+    return '{:1.1f} jt'.format(x * 1e-3)
+
+formatter = FuncFormatter(with_juta)
+
+# Create the dataframe for plotting
+monthly_rent_df = create_monthly_rent_df(day_df)  # Replace 'day_df' with your actual dataframe
+
 fig, ax = plt.subplots(figsize=(24, 8))
+
+# Plot the data
 ax.plot(
     monthly_rent_df.index,
     monthly_rent_df['count'],
     marker='o', 
-    linewidth=2,
+    markersize=10,
+    linewidth=3,
+    linestyle='-',
     color='tab:blue'
 )
 
+# Annotate data points with formatted labels
 for index, row in enumerate(monthly_rent_df['count']):
-    ax.text(index, row + 1, str(row), ha='center', va='bottom', fontsize=12)
+    ax.text(index, row, with_juta(row, None), ha='center', va='bottom', fontsize=13, fontweight='bold', color='darkblue')
 
-ax.tick_params(axis='x', labelsize=25, rotation=45)
+# Set major formatter for y-axis
+ax.yaxis.set_major_formatter(formatter)
+
+# Improve the aesthetics
+ax.set_title('Monthly Bike Rentals', fontsize=26, fontweight='bold', pad=20)
+ax.set_xlabel('Month', fontsize=20, labelpad=15)
+ax.set_ylabel('Number of Rentals', fontsize=20, labelpad=15)
+ax.tick_params(axis='x', labelsize=20, rotation=45)
 ax.tick_params(axis='y', labelsize=20)
+ax.grid(True, which='both', linestyle='--', linewidth=0.5)
+ax.set_facecolor('whitesmoke')  # Set a background color
+
+# Add a legend
+ax.legend(['Total Rentals'], fontsize=14, frameon=True, shadow=True)
+
+# Tight layout to ensure nothing is clipped
+plt.tight_layout()
+
+# Show the plot
 st.pyplot(fig)
 
 st.markdown('''
@@ -210,18 +240,31 @@ Tren musiman yang jelas dalam penyewaan sepeda menunjukkan bahwa permintaan untu
 # Membuat jumlah penyewaan berdasarkan season
 st.subheader('Seasonly Rentals')
 
+def with_units(x, pos):
+    """The two args are the value and tick position."""
+    if x >= 1e6:  # If the value is in the millions
+        return '{:1.1f} jt'.format(x*1e-6)
+    return '{:1.0f} jt'.format(x*1e-3)  # Value is in the thousands
+
+formatter = FuncFormatter(with_units)
+
 fig, ax = plt.subplots(figsize=(16, 8))
 
-# Create a new dataframe with 'season' and 'type' as rows and 'count' as values
+# Create a new melted dataframe for the seaborn barplot
 melted_season_rent_df = season_rent_df.melt(id_vars='season', value_vars=['registered', 'casual'],
                                             var_name='type', value_name='count')
 
 # Create the barplot with seaborn
 sns.barplot(x='season', y='count', hue='type', data=melted_season_rent_df, ax=ax)
 
+# Set custom formatting for y-axis labels
+ax.yaxis.set_major_formatter(formatter)
+
 # Place the barplot labels
 for p in ax.patches:
-    ax.annotate(format(p.get_height(), '.1f'), 
+    # You'll want to format this with the same logic as your y-axis labels
+    label = with_units(p.get_height(), None)
+    ax.annotate(label, 
                 (p.get_x() + p.get_width() / 2., p.get_height()), 
                 ha='center', va='center', xytext=(0, 10), 
                 textcoords='offset points')
@@ -235,7 +278,6 @@ ax.legend(title='Type')
 
 # Display the plot
 st.pyplot(fig)
-
 st.markdown('''
 ## Analisis:
 
@@ -258,7 +300,7 @@ Tren musiman dan hari-hari dengan permintaan tinggi menunjukkan bahwa ada peluan
 
 
 ## Membuah jumlah penyewaan berdasarkan kondisi cuaca
-
+from matplotlib.ticker import FuncFormatter
 
 st.subheader('Weatherly Rentals')
 
