@@ -211,33 +211,28 @@ st.subheader('Seasonly Rentals')
 
 fig, ax = plt.subplots(figsize=(16, 8))
 
-sns.barplot(
-    x='season',
-    y='registered',
-    data=season_rent_df,
-    label='Registered',
-    color='tab:blue',
-    ax=ax
-)
+# Create a new dataframe with 'season' and 'type' as rows and 'count' as values
+melted_season_rent_df = season_rent_df.melt(id_vars='season', value_vars=['registered', 'casual'],
+                                            var_name='type', value_name='count')
 
-sns.barplot(
-    x='season',
-    y='casual',
-    data=season_rent_df,
-    label='Casual',
-    color='tab:orange',
-    ax=ax
-)
+# Create the barplot with seaborn
+sns.barplot(x='season', y='count', hue='type', data=melted_season_rent_df, ax=ax)
 
-for index, row in season_rent_df.iterrows():
-    ax.text(index, row['registered'], str(row['registered']), ha='center', va='bottom', fontsize=12)
-    ax.text(index, row['casual'], str(row['casual']), ha='center', va='bottom', fontsize=12)
+# Place the barplot labels
+for p in ax.patches:
+    ax.annotate(format(p.get_height(), '.1f'), 
+                (p.get_x() + p.get_width() / 2., p.get_height()), 
+                ha='center', va='center', xytext=(0, 10), 
+                textcoords='offset points')
 
-ax.set_xlabel(None)
-ax.set_ylabel(None)
-ax.tick_params(axis='x', labelsize=20, rotation=0)
+# Set the labels and ticks
+ax.set_xlabel('Season', fontsize=15)
+ax.set_ylabel('Number of Rentals', fontsize=15)
+ax.tick_params(axis='x', labelsize=20)
 ax.tick_params(axis='y', labelsize=15)
-ax.legend()
+ax.legend(title='Type')
+
+# Display the plot
 st.pyplot(fig)
 
 st.markdown('''
@@ -262,11 +257,13 @@ Tren musiman dan hari-hari dengan permintaan tinggi menunjukkan bahwa ada peluan
 
 
 ## Membuah jumlah penyewaan berdasarkan kondisi cuaca
+from matplotlib.ticker import FuncFormatter
+
 st.subheader('Weatherly Rentals')
 
 fig, ax = plt.subplots(figsize=(16, 8))
 
-colors=["tab:blue", "tab:orange", "tab:green"]
+colors = ["tab:blue", "tab:orange", "tab:green"]
 
 sns.barplot(
     x=weather_rent_df.index,
@@ -275,11 +272,24 @@ sns.barplot(
     ax=ax
 )
 
+# This function converts large numbers to strings with appropriate units (e.g., K for thousands, M for millions)
+def human_format(num, pos):
+    magnitude = 0
+    while abs(num) >= 1000:
+        magnitude += 1
+        num /= 1000.0
+    # Add more suffixes if you need them
+    return '%.1f%s' % (num, ['', 'K', 'M', 'G', 'T', 'P'][magnitude])
+
+# Apply the custom formatter to the y-axis
+ax.yaxis.set_major_formatter(FuncFormatter(human_format))
+
+# Add labels on top of each bar
 for index, row in enumerate(weather_rent_df['count']):
-    ax.text(index, row + 1, str(row), ha='center', va='bottom', fontsize=12)
+    ax.text(index, row, f'{human_format(row, None)}', ha='center', va='bottom', fontsize=12)
 
 ax.set_xlabel(None)
-ax.set_ylabel(None)
+ax.set_ylabel('Number of Rentals', fontsize=15)
 ax.tick_params(axis='x', labelsize=20)
 ax.tick_params(axis='y', labelsize=15)
 st.pyplot(fig)
@@ -289,7 +299,7 @@ st.markdown('''
 
 ### Tren Musiman:
 
-Di Bojongsoang, terdapat tren musiman yang signifikan dalam penyewaan sepeda. Permintaan tertinggi terjadi saat musim kemarau (Mei-Oktober), sementara permintaan terendah terjadi pada musim hujan (November-April).
+Di america, terdapat tren musiman yang signifikan dalam penyewaan sepeda. Permintaan tertinggi terjadi saat musim kemarau (Mei-Oktober), sementara permintaan terendah terjadi pada musim hujan (November-April).
 
 ### Faktor Penentu:
 
@@ -308,76 +318,71 @@ Tren musiman dan hari-hari dengan permintaan tinggi menunjukkan bahwa ada peluan
 
 
 ##Membuat jumlah penyewaan berdasarkan weekday, working dan holiday
+def human_format(num, pos):
+    magnitude = 0
+    while abs(num) >= 1000:
+        magnitude += 1
+        num /= 1000.0
+    return f'{num:.1f}{" kMGTPE"[magnitude]}'.strip()
+
+# Custom palette
+palette = sns.color_palette("coolwarm", 7)
+
 st.subheader('Weekday, Workingday, and Holiday Rentals')
 
-fig, axes = plt.subplots(nrows=3, ncols=1, figsize=(15,10))
+fig, axes = plt.subplots(nrows=3, ncols=1, figsize=(15, 15), sharex=False)
 
-colors1=["tab:blue", "tab:orange"]
-colors2=["tab:blue", "tab:orange"]
-colors3=["tab:blue", "tab:orange", "tab:green", "tab:red", "tab:purple", "tab:brown", "tab:pink"]
+# Set up a formatter for the y-axis
+formatter = FuncFormatter(human_format)
 
-## Berdasarkan workingday
+## Plot for rentals based on working day
 sns.barplot(
     x='workingday',
     y='count',
     data=workingday_rent_df,
-    palette=colors1,
+    palette=palette[:2],
     ax=axes[0])
-
-for index, row in enumerate(workingday_rent_df['count']):
-    axes[0].text(index, row + 1, str(row), ha='center', va='bottom', fontsize=12)
-
-axes[0].set_title('Number of Rents based on Working Day')
-axes[0].set_ylabel(None)
+axes[0].yaxis.set_major_formatter(formatter)
+axes[0].set_title('Number of Rentals based on Working Day', fontsize=18)
+axes[0].set_xlabel('Working Day (0 = No, 1 = Yes)', fontsize=14)
+axes[0].set_ylabel('Number of Rentals', fontsize=14)
 axes[0].tick_params(axis='x', labelsize=15)
-axes[0].tick_params(axis='y', labelsize=10)
+axes[0].tick_params(axis='y', labelsize=12)
 
-# Berdasarkan holiday
+## Plot for rentals based on holiday
 sns.barplot(
-  x='holiday',
-  y='count',
-  data=holiday_rent_df,
-  palette=colors2,
-  ax=axes[1])
-
-for index, row in enumerate(holiday_rent_df['count']):
-    axes[1].text(index, row + 1, str(row), ha='center', va='bottom', fontsize=12)
-
-axes[1].set_title('Number of Rents based on Holiday')
-axes[1].set_ylabel(None)
+    x='holiday',
+    y='count',
+    data=holiday_rent_df,
+    palette=palette[:2],
+    ax=axes[1])
+axes[1].yaxis.set_major_formatter(formatter)
+axes[1].set_title('Number of Rentals based on Holiday', fontsize=18)
+axes[1].set_xlabel('Holiday (0 = No, 1 = Yes)', fontsize=14)
+axes[1].set_ylabel('Number of Rentals', fontsize=14)
 axes[1].tick_params(axis='x', labelsize=15)
-axes[1].tick_params(axis='y', labelsize=10)
+axes[1].tick_params(axis='y', labelsize=12)
 
-# Berdasarkan weekday
+## Plot for rentals based on a weekday
 sns.barplot(
-  x='weekday',
-  y='count',
-  data=weekday_rent_df,
-  palette=colors3,
-  ax=axes[2])
-
-for index, row in enumerate(weekday_rent_df['count']):
-    axes[2].text(index, row + 1, str(row), ha='center', va='bottom', fontsize=12)
-
-axes[2].set_title('Number of Rents based on Weekday')
-axes[2].set_ylabel(None)
+    x='weekday',
+    y='count',
+    data=weekday_rent_df,
+    palette=palette,
+    ax=axes[2])
+axes[2].yaxis.set_major_formatter(formatter)
+axes[2].set_title('Number of Rentals based on Weekday', fontsize=18)
+axes[2].set_xticklabels(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], fontsize=13)
+axes[2].set_xlabel('Day of the Week', fontsize=14)
+axes[2].set_ylabel('Number of Rentals', fontsize=14)
 axes[2].tick_params(axis='x', labelsize=15)
-axes[2].tick_params(axis='y', labelsize=10)
+axes[2].tick_params(axis='y', labelsize=12)
 
-
-sns.pointplot(
-    x=day_df['hr'],
-    y=day_df['registered'],
-    hue=day_df['season'],
-    ax=axes[1]
-)
-
-axes[1].set_title('Bike Rental Trend according to Instant on Season')
-axes[1].set_xlabel("Hour of the Day")
-axes[1].set_ylabel("Registered Bike Rentals")
-
-# Plot ketiga (kosongkan saja)
-axes[2].axis('off')
+# Add human-readable labels on top of the bars
+for i, ax in enumerate(axes):
+    for p in ax.patches:
+        ax.text(p.get_x() + p.get_width() / 2., p.get_height(), human_format(p.get_height(), None), 
+                fontsize=11, color='black', ha='center', va='bottom')
 
 plt.tight_layout()
 st.pyplot(fig)
