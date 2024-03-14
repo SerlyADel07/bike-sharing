@@ -167,10 +167,12 @@ with col1:
 with col2:
     daily_rent_registered = daily_registered_rent_df['registered'].sum()
     st.metric('Registered User', value=custom_format(daily_rent_registered))
+    st.markdown("---")
  
 with col3:
     daily_rent_total = daily_rent_df['count'].sum()
     st.metric('Total User', value=custom_format(daily_rent_total))
+    st.markdown("---")
 
 st.markdown("""
       ### Perbedaan Pengguna Casual  dan Pengguna Terdaftar:
@@ -250,7 +252,7 @@ Musim dingin (Desember-Februari) adalah periode dengan permintaan sewa sepeda te
 
 Ada sedikit peningkatan permintaan sewa sepeda di musim semi (Maret-Mei) dan musim gugur (September-November). Hal ini kemungkinan disebabkan oleh cuaca yang lebih moderat, yang membuat orang lebih nyaman untuk bersepeda.
 
-### Kesimpulan:
+#### Kesimpulan:
 
 Tren musiman yang jelas dalam penyewaan sepeda menunjukkan bahwa permintaan untuk layanan ini sangat dipengaruhi oleh cuaca. Perusahaan penyewaan sepeda dapat menggunakan data ini untuk merencanakan strategi bisnis mereka dan memastikan bahwa mereka memiliki persediaan sepeda yang memadai untuk memenuhi permintaan.
 ''')
@@ -298,9 +300,9 @@ ax.legend(title='Type')
 # Display the plot
 st.pyplot(fig)
 st.markdown('''
-## Analisis:
+### Analisis:
 
-### Tren Musiman:
+#### Tren Musiman:
 
 Di America, terdapat tren musiman yang menarik dalam persewaan musiman, yang mungkin mengindikasikan perubahan pola pariwisata atau aktivitas rekreasi.
 
