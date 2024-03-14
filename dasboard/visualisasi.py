@@ -388,8 +388,6 @@ for i, ax in enumerate(axes):
 plt.tight_layout()
 st.pyplot(fig)
 
-python
-Copy code
 st.markdown("""
 ### Analisis Perbedaan Penyewaan Sepeda pada Hari Kerja, Akhir Pekan, dan Hari Libur:
 
