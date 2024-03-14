@@ -163,7 +163,16 @@ with col1:
     daily_rent_casual = daily_casual_rent_df['casual'].sum()
     st.metric('Casual User', value=custom_format(daily_rent_casual))
     st.markdown("---")
-    st.markdown("""
+
+with col2:
+    daily_rent_registered = daily_registered_rent_df['registered'].sum()
+    st.metric('Registered User', value=custom_format(daily_rent_registered))
+ 
+with col3:
+    daily_rent_total = daily_rent_df['count'].sum()
+    st.metric('Total User', value=custom_format(daily_rent_total))
+
+st.markdown("""
       ## Perbedaan Pengguna Casual  dan Pengguna Terdaftar:
       
       ### Pengguna Casual :
@@ -181,14 +190,6 @@ with col1:
       - Potensi biaya sewa yang lebih rendah: Pengguna terdaftar mungkin bisa mendapatkan potongan harga, reward, atau paket sewa khusus yang lebih hemat dibandingkan pengguna casual.
       - Kemungkinan opsi pembayaran yang lebih beragam: Selain metode pembayaran umum, pengguna terdaftar mungkin bisa menggunakan opsi lain seperti dompet digital atau voucher khusus.
       """, unsafe_allow_html=True)
-
-with col2:
-    daily_rent_registered = daily_registered_rent_df['registered'].sum()
-    st.metric('Registered User', value=custom_format(daily_rent_registered))
- 
-with col3:
-    daily_rent_total = daily_rent_df['count'].sum()
-    st.metric('Total User', value=custom_format(daily_rent_total))
 
 # Membuat jumlah penyewaan bulanan
 st.subheader('Monthly Rentals')
