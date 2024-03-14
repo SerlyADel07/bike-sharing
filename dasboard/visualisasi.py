@@ -302,82 +302,21 @@ st.markdown('''
 
 ### Tren Musiman:
 
-Di America, terdapat tren musiman yang signifikan dalam penyewaan sepeda. Permintaan tertinggi terjadi saat musim kemarau (Mei-Oktober), sementara permintaan terendah terjadi pada musim hujan (November-April).
+Di America, terdapat tren musiman yang menarik dalam persewaan musiman, yang mungkin mengindikasikan perubahan pola pariwisata atau aktivitas rekreasi.
 
-##3 Faktor Penentu:
+Secara keseluruhan, Musim Gugur tampaknya menjadi musim paling populer untuk persewaan, dengan jumlah penyewa terdaftar dan penyewa biasa terbanyak. Hal ini mungkin disebabkan oleh beberapa faktor, seperti kondisi cuaca yang menyenangkan dan mendukung aktivitas luar ruangan, atau dedaunan musim gugur yang menarik wisatawan ke wilayah tertentu.
 
-Cuaca adalah faktor utama yang memengaruhi tren musiman ini. Pada musim kemarau, cuaca cerah dan minim hujan mendorong orang untuk bersepeda. Di sisi lain, pada musim hujan, cuaca basah dan angin membuat orang lebih memilih untuk tidak bersepeda.
+Musim semi mengikuti musim gugur dalam hal total sewa, dengan distribusi serupa antara penyewa terdaftar dan penyewa biasa. Hal ini menunjukkan bahwa Musim Semi juga merupakan waktu yang populer bagi orang-orang untuk menikmati aktivitas luar ruangan dengan bersepeda.
 
-### Hari-Hari Dengan Permintaan Tinggi:
+Musim panas tampaknya menjadi musim yang paling tidak populer untuk persewaan, dengan jumlah penyewa terendah secara keseluruhan. Mungkin ada beberapa alasan untuk hal ini. Kondisi cuaca yang panas mungkin membuat bersepeda menjadi kurang menarik bagi sebagian orang. Selain itu, musim panas mungkin merupakan waktu ketika orang lebih cenderung melakukan perjalanan ke tempat-tempat yang tidak menggunakan sepeda sebagai moda transportasi utama.
 
-Selain tren musiman, hari-hari tertentu juga menunjukkan permintaan sewa sepeda yang lebih tinggi, seperti akhir pekan dan hari libur nasional. Ini menunjukkan bahwa banyak orang menggunakan sepeda untuk beraktivitas luar ruangan pada hari-hari tersebut.
+Sewa musim dingin sedikit lebih tinggi daripada sewa musim panas. Hal ini mungkin disebabkan oleh orang-orang yang menggunakan sepeda untuk bepergian atau melakukan keperluan lain selama bulan-bulan musim dingin, terutama di daerah dengan cuaca musim dingin yang sejuk.
 
-## Kesimpulan:
+Penting untuk dicatat bahwa data ini hanya mencerminkan jumlah penyewa dan tidak memberi tahu kami jangka waktu sewa mereka. Jadi, meskipun Musim Gugur memiliki penyewa terbanyak, kami tidak tahu apakah mereka menyewa untuk perjalanan singkat atau perjalanan yang lebih lama.
 
-Tren musiman dan hari-hari dengan permintaan tinggi menunjukkan bahwa ada peluang besar bagi perusahaan penyewaan sepeda untuk meningkatkan pendapatan mereka. Perusahaan dapat menggunakan data ini untuk merencanakan strategi bisnis dan memastikan bahwa mereka memiliki persediaan sepeda yang memadai untuk memenuhi permintaan.
+Analisis data lebih lanjut yang menggabungkan durasi sewa dan variasi musiman dapat memberikan gambaran pola sewa yang lebih komprehensif.
+.
 ''')
-
-
-## Membuah jumlah penyewaan berdasarkan kondisi cuaca
-from matplotlib.ticker import FuncFormatter
-
-st.subheader('Weatherly Rentals')
-
-fig, ax = plt.subplots(figsize=(16, 8))
-
-colors = ["tab:blue", "tab:orange", "tab:green"]
-
-sns.barplot(
-    x=weather_rent_df.index,
-    y=weather_rent_df['count'],
-    palette=colors,
-    ax=ax
-)
-
-# This function converts large numbers to strings with appropriate units (e.g., K for thousands, M for millions)
-def human_format(num, pos):
-    magnitude = 0
-    while abs(num) >= 1000:
-        magnitude += 1
-        num /= 1000.0
-    # Add more suffixes if you need them
-    return '%.1f%s' % (num, ['', 'K', 'M', 'G', 'T', 'P'][magnitude])
-
-# Apply the custom formatter to the y-axis
-ax.yaxis.set_major_formatter(FuncFormatter(human_format))
-
-# Add labels on top of each bar
-for index, row in enumerate(weather_rent_df['count']):
-    ax.text(index, row, f'{human_format(row, None)}', ha='center', va='bottom', fontsize=12)
-
-ax.set_xlabel(None)
-ax.set_ylabel('Number of Rentals', fontsize=15)
-ax.tick_params(axis='x', labelsize=20)
-ax.tick_params(axis='y', labelsize=15)
-st.pyplot(fig)
-
-st.markdown('''
-## Analisis:
-
-### Tren Musiman:
-
-Di america, terdapat tren musiman yang signifikan dalam penyewaan sepeda. Permintaan tertinggi terjadi saat musim kemarau (Mei-Oktober), sementara permintaan terendah terjadi pada musim hujan (November-April).
-
-### Faktor Penentu:
-
-Cuaca adalah faktor utama yang memengaruhi tren musiman ini. Pada musim kemarau, cuaca cerah dan minim hujan mendorong orang untuk bersepeda. Di sisi lain, pada musim hujan, cuaca basah dan angin membuat orang lebih memilih untuk tidak bersepeda.
-
-##3 Hari-Hari Dengan Permintaan Tinggi:
-
-Selain tren musiman, hari-hari tertentu juga menunjukkan permintaan sewa sepeda yang lebih tinggi, seperti akhir pekan dan hari libur nasional. Ini menunjukkan bahwa banyak orang menggunakan sepeda untuk beraktivitas luar ruangan pada hari-hari tersebut.
-
-## Kesimpulan:
-
-Tren musiman dan hari-hari dengan permintaan tinggi menunjukkan bahwa ada peluang besar bagi perusahaan penyewaan sepeda di Bojongsoang untuk meningkatkan pendapatan mereka. Perusahaan dapat menggunakan data ini untuk merencanakan strategi bisnis dan memastikan bahwa mereka memiliki persediaan sepeda yang memadai untuk memenuhi permintaan.
-''')
-
-
-
 
 ##Membuat jumlah penyewaan berdasarkan weekday, working dan holiday
 def human_format(num, pos):
@@ -448,25 +387,29 @@ for i, ax in enumerate(axes):
 
 plt.tight_layout()
 st.pyplot(fig)
-st.markdown('''
-## Analisis:
 
-### Tren Musiman:
+python
+Copy code
+st.markdown("""
+### Analisis Perbedaan Penyewaan Sepeda pada Hari Kerja, Akhir Pekan, dan Hari Libur:
 
-Dalam industri penyewaan sepeda di America, ada tren musiman yang jelas. Permintaan tertinggi terjadi selama musim kemarau (Mei-Oktober), sementara permintaan terendah terjadi selama musim hujan (November-April).
+Data menunjukkan bahwa terdapat perbedaan signifikan dalam jumlah penyewaan sepeda pada hari kerja, akhir pekan, dan hari libur.
 
-### Faktor Penentu:
+#### Hari Kerja:
 
-Cuaca adalah faktor kunci yang memengaruhi tren musiman ini. Di musim kemarau, cuaca cerah dan minim hujan membuat orang lebih nyaman untuk bersepeda. Sebaliknya, di musim hujan, cuaca basah dan angin membuat orang enggan untuk bersepeda.
+Hari kerja memiliki jumlah penyewaan tertinggi, menunjukkan bahwa banyak orang menggunakan sepeda sebagai alat transportasi untuk pergi bekerja. Hal ini dapat disebabkan oleh beberapa faktor:
 
-### Hari-Hari Dengan Permintaan Tinggi:
+- **Meningkatnya Kesadaran akan Kesehatan:** Orang-orang semakin sadar akan manfaat kesehatan dari bersepeda dan memilihnya sebagai alternatif yang lebih sehat daripada kendaraan pribadi.
+- **Biaya yang Lebih Murah:** Bersepeda dapat menjadi pilihan yang lebih murah dibandingkan dengan menggunakan kendaraan pribadi atau transportasi umum.
+- **Kepedulian terhadap Lingkungan:** Bersepeda merupakan pilihan yang ramah lingkungan dan dapat membantu mengurangi polusi udara.
 
-Selain tren musiman, ada juga hari-hari tertentu yang menunjukkan permintaan sewa sepeda yang lebih tinggi, seperti akhir pekan dan hari libur nasional. Ini menunjukkan bahwa banyak orang memilih untuk menggunakan sepeda untuk beraktivitas di luar ruangan pada hari-hari tersebut.
+#### Akhir Pekan:
 
-## Kesimpulan:
+Akhir pekan memiliki jumlah penyewaan kedua tertinggi. Hal ini menunjukkan bahwa banyak orang menggunakan sepeda untuk kegiatan rekreasi dan bersantai di akhir pekan.
 
-Tren musiman dan hari-hari dengan permintaan tinggi dalam industri penyewaan sepeda menunjukkan adanya peluang besar bagi perusahaan penyewaan sepeda untuk meningkatkan pendapatan mereka. Perusahaan dapat menggunakan data ini untuk merencanakan strategi bisnis mereka dan memastikan bahwa mereka memiliki persediaan sepeda yang memadai untuk memenuhi permintaan.
-''')
+#### Hari Libur:
 
+Hari libur memiliki jumlah penyewaan terendah. Hal ini mungkin karena orang-orang memiliki lebih banyak pilihan untuk beraktivitas di hari libur, seperti bepergian atau mengunjungi keluarga.
+""", unsafe_allow_html=True)
 
 st.caption('Copyright (c) SerlyADel 2024')
