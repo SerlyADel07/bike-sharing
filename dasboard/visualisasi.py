@@ -173,16 +173,16 @@ with col3:
     st.metric('Total User', value=custom_format(daily_rent_total))
 
 st.markdown("""
-      ## Perbedaan Pengguna Casual  dan Pengguna Terdaftar:
+      ### Perbedaan Pengguna Casual  dan Pengguna Terdaftar:
       
-      ### Pengguna Casual :
+      #### Pengguna Casual :
       
       - Proses sewa yang lebih simpel: Biasanya pengguna casual dapat menyewa sepeda tanpa perlu membuat akun atau melalui proses pendaftaran yang rumit.
       - Opsi pembayaran yang lebih terbatas: Pengguna casual mungkin hanya bisa menggunakan metode pembayaran tertentu, seperti kartu kredit atau debit tanpa kontak, untuk menyewa sepeda.
       - Akses fitur terbatas: Pengguna casual mungkin tidak memiliki akses ke semua fitur yang tersedia dalam aplikasi atau layanan penyewaan sepeda, seperti riwayat sewa, poin reward, atau opsi untuk memperpanjang sewa.
       - Biaya sewa yang lebih tinggi: Dalam beberapa penyewaan sepeda, pengguna casual mungkin dikenakan biaya sewa yang lebih tinggi dibandingkan pengguna terdaftar.
       
-      ### Pengguna Terdaftar:
+      #### Pengguna Terdaftar:
       
       - Memiliki akun: Pengguna terdaftar telah membuat akun pada aplikasi atau layanan penyewaan sepeda.
       - Proses sewa yang lebih efisien: Dengan akun terdaftar, proses sewa sepeda biasanya menjadi lebih efisien karena informasi pengguna sudah tersimpan.
